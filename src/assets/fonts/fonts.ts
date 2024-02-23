@@ -1,89 +1,63 @@
 import {StyleSheet} from 'react-native';
 
-export type fontsAlias =
-  | 'H1'
-  | 'H2'
-  | 'H3'
-  | 'Subtitle1'
-  | 'Subtitle2'
-  | 'Subtitle3'
-  | 'Body1'
-  | 'Body2'
-  | 'Body3'
-  | 'Body4'
-  | 'Body5'
-  | 'Body6'
-  | 'Caption1'
-  | 'Caption2';
-
 export const fonts = StyleSheet.create({
   H1: {
-    fontFamily: 'SpoqaHanSansNeo-Bold',
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 36,
+    lineHeight: 44,
+  },
+  H2: {
+    fontFamily: 'Inter-SemiBold',
     fontSize: 28,
     lineHeight: 36,
   },
-  H2: {
-    fontFamily: 'SpoqaHanSansNeo-Bold',
+  H3: {
+    fontFamily: 'Inter-SemiBold',
     fontSize: 24,
     lineHeight: 32,
   },
-  H3: {
-    fontFamily: 'SpoqaHanSansNeo-Bold',
+  H4: {
+    fontFamily: 'Inter-SemiBold',
     fontSize: 20,
     lineHeight: 28,
   },
   Subtitle1: {
-    fontFamily: 'SpoqaHanSansNeo-Bold',
+    fontFamily: 'Inter-SemiBold',
     fontSize: 18,
-    lineHeight: 26,
+    lineHeight: 24,
   },
   Subtitle2: {
-    fontFamily: 'SpoqaHanSansNeo-Bold',
+    fontFamily: 'Inter-SemiBold',
     fontSize: 16,
     lineHeight: 24,
   },
   Subtitle3: {
-    fontFamily: 'SpoqaHanSansNeo-Bold',
+    fontFamily: 'Inter-SemiBold',
     fontSize: 14,
-    lineHeight: 22,
+    lineHeight: 20,
+  },
+  Subtitle4: {
+    fontFamily: 'Inter-SemiBold',
+    fontSize: 12,
+    lineHeight: 18,
   },
   Body1: {
-    fontFamily: 'SpoqaHanSansNeo-Regular',
+    fontFamily: 'Inter-Regular',
     fontSize: 16,
     lineHeight: 24,
   },
   Body2: {
-    fontFamily: 'SpoqaHanSansNeo-Medium',
-    fontSize: 14,
-    lineHeight: 24,
-  },
-  Body3: {
-    fontFamily: 'MaruBuri-Regular',
-    fontSize: 24,
-    lineHeight: 36,
-  },
-  Body4: {
-    fontFamily: 'MaruBuri-Regular',
-    fontSize: 18,
-    lineHeight: 26,
-  },
-  Body5: {
-    fontFamily: 'MaruBuri-Regular',
-    fontSize: 16,
-    lineHeight: 24,
-  },
-  Body6: {
-    fontFamily: 'MaruBuri-SemiBold',
+    fontFamily: 'Inter-Regular',
     fontSize: 14,
     lineHeight: 24,
   },
   Caption1: {
-    fontFamily: 'SpoqaHanSansNeo-Medium',
+    fontFamily: 'Inter-Regular',
     fontSize: 12,
     lineHeight: 18,
   },
   Caption2: {
-    fontFamily: 'SpoqaHanSansNeo-Bold',
+    fontFamily: 'Inter-SemiBold',
     fontSize: 10,
     lineHeight: 12,
   },
