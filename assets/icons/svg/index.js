@@ -1,0 +1,11 @@
+export {default as Status} from './status.svg';
+export {default as Alcoholic} from './alcoholic.svg';
+export {default as Beauty} from './beauty.svg';
+export {default as Dairy_products} from './dairy_products.svg';
+export {default as Dessert} from './dessert.svg';
+export {default as Drink} from './drink.svg';
+export {default as Household_goods} from './household_goods.svg';
+export {default as Medicine} from './medicine.svg';
+export {default as Ramen} from './ramen.svg';
+export {default as Snack} from './snack.svg';
+export {default as Alarm} from './alarm.svg';

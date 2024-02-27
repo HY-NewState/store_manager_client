@@ -12,11 +12,11 @@
 		13B07FBC1A68108700A75B9A /* AppDelegate.mm in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB01A68108700A75B9A /* AppDelegate.mm */; };
 		13B07FBF1A68108700A75B9A /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 13B07FB51A68108700A75B9A /* Images.xcassets */; };
 		13B07FC11A68108700A75B9A /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 13B07FB71A68108700A75B9A /* main.m */; };
+		1831816785874D6DA27F047F /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B3E7596787B4D8EB0899791 /* Inter-SemiBold.ttf */; };
+		24C9C1C05B964358940C129F /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 610B50246C5C48828D0E25EC /* Inter-Regular.ttf */; };
+		484CD91B6387425E9F88F49B /* fonts.ts in Resources */ = {isa = PBXBuildFile; fileRef = B78BE88CDFFF41EFBBE937E0 /* fonts.ts */; };
 		7699B88040F8A987B510C191 /* libPods-store_manager_client-store_manager_clientTests.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 19F6CBCC0A4E27FBF8BF4A61 /* libPods-store_manager_client-store_manager_clientTests.a */; };
 		81AB9BB82411601600AC10FF /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */; };
-		24C9C1C05B964358940C129F /* Inter-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 610B50246C5C48828D0E25EC /* Inter-Regular.ttf */; };
-		1831816785874D6DA27F047F /* Inter-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = 5B3E7596787B4D8EB0899791 /* Inter-SemiBold.ttf */; };
-		484CD91B6387425E9F88F49B /* fonts.ts in Resources */ = {isa = PBXBuildFile; fileRef = B78BE88CDFFF41EFBBE937E0 /* fonts.ts */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -42,14 +42,14 @@
 		19F6CBCC0A4E27FBF8BF4A61 /* libPods-store_manager_client-store_manager_clientTests.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-store_manager_client-store_manager_clientTests.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		3B4392A12AC88292D35C810B /* Pods-store_manager_client.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-store_manager_client.debug.xcconfig"; path = "Target Support Files/Pods-store_manager_client/Pods-store_manager_client.debug.xcconfig"; sourceTree = "<group>"; };
 		5709B34CF0A7D63546082F79 /* Pods-store_manager_client.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-store_manager_client.release.xcconfig"; path = "Target Support Files/Pods-store_manager_client/Pods-store_manager_client.release.xcconfig"; sourceTree = "<group>"; };
+		5B3E7596787B4D8EB0899791 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-SemiBold.ttf"; path = "../src/assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; };
 		5B7EB9410499542E8C5724F5 /* Pods-store_manager_client-store_manager_clientTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-store_manager_client-store_manager_clientTests.debug.xcconfig"; path = "Target Support Files/Pods-store_manager_client-store_manager_clientTests/Pods-store_manager_client-store_manager_clientTests.debug.xcconfig"; sourceTree = "<group>"; };
 		5DCACB8F33CDC322A6C60F78 /* libPods-store_manager_client.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-store_manager_client.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		610B50246C5C48828D0E25EC /* Inter-Regular.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = "Inter-Regular.ttf"; path = "../src/assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; };
 		81AB9BB72411601600AC10FF /* LaunchScreen.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; name = LaunchScreen.storyboard; path = store_manager_client/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		89C6BE57DB24E9ADA2F236DE /* Pods-store_manager_client-store_manager_clientTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-store_manager_client-store_manager_clientTests.release.xcconfig"; path = "Target Support Files/Pods-store_manager_client-store_manager_clientTests/Pods-store_manager_client-store_manager_clientTests.release.xcconfig"; sourceTree = "<group>"; };
+		B78BE88CDFFF41EFBBE937E0 /* fonts.ts */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = fonts.ts; path = ../src/assets/fonts/fonts.ts; sourceTree = "<group>"; };
 		ED297162215061F000B7C4FE /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/Frameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		610B50246C5C48828D0E25EC /* Inter-Regular.ttf */ = {isa = PBXFileReference; name = "Inter-Regular.ttf"; path = "../src/assets/fonts/Inter-Regular.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		5B3E7596787B4D8EB0899791 /* Inter-SemiBold.ttf */ = {isa = PBXFileReference; name = "Inter-SemiBold.ttf"; path = "../src/assets/fonts/Inter-SemiBold.ttf"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
-		B78BE88CDFFF41EFBBE937E0 /* fonts.ts */ = {isa = PBXFileReference; name = "fonts.ts"; path = "../src/assets/fonts/fonts.ts"; sourceTree = "<group>"; fileEncoding = undefined; lastKnownFileType = unknown; explicitFileType = undefined; includeInIndex = 0; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -144,6 +144,16 @@
 			name = Products;
 			sourceTree = "<group>";
 		};
+		A169854066AA406F91765700 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				610B50246C5C48828D0E25EC /* Inter-Regular.ttf */,
+				5B3E7596787B4D8EB0899791 /* Inter-SemiBold.ttf */,
+				B78BE88CDFFF41EFBBE937E0 /* fonts.ts */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
 		BBD78D7AC51CEA395F1C20DB /* Pods */ = {
 			isa = PBXGroup;
 			children = (
@@ -154,17 +164,6 @@
 			);
 			path = Pods;
 			sourceTree = "<group>";
-		};
-		A169854066AA406F91765700 /* Resources */ = {
-			isa = "PBXGroup";
-			children = (
-				610B50246C5C48828D0E25EC /* Inter-Regular.ttf */,
-				5B3E7596787B4D8EB0899791 /* Inter-SemiBold.ttf */,
-				B78BE88CDFFF41EFBBE937E0 /* fonts.ts */,
-			);
-			name = Resources;
-			sourceTree = "<group>";
-			path = "";
 		};
 /* End PBXGroup section */
 
@@ -507,6 +506,7 @@
 				CURRENT_PROJECT_VERSION = 1;
 				ENABLE_BITCODE = NO;
 				INFOPLIST_FILE = store_manager_client/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -518,8 +518,12 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = store_manager_client;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Debug;
@@ -532,6 +536,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CURRENT_PROJECT_VERSION = 1;
 				INFOPLIST_FILE = store_manager_client/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 13.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -543,7 +548,11 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = "org.reactjs.native.example.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = store_manager_client;
+				SUPPORTED_PLATFORMS = "iphoneos iphonesimulator";
+				SUPPORTS_MACCATALYST = NO;
+				SUPPORTS_XR_DESIGNED_FOR_IPHONE_IPAD = NO;
 				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
 			name = Release;
