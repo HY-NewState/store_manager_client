@@ -13,9 +13,10 @@ import {
   Ramen,
   Snack,
   Status,
-} from './assets/icons/svg';
+} from './src/assets/icons/svg';
 import {fonts} from './src/assets/fonts/fonts';
-import DetailPage from './DetailPage';
+import DetailPage from './src/components/DetailPage';
+import getDate from './src/util/getDate';
 
 const data = [
   {key: 0, title: '과자', icon: 'Snack'},
@@ -90,7 +91,7 @@ const App = () => {
                   <Status style={{marginRight: 12}} />
                   <Text style={fonts.Subtitle1}>매장상태</Text>
                 </View>
-                <Text style={fonts.Subtitle1}>1월27일 토요일</Text>
+                <Text style={fonts.Subtitle1}>{getDate()}</Text>
               </View>
               <View
                 style={{
