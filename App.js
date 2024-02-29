@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {
@@ -15,20 +15,36 @@ import {
   Status,
 } from './assets/icons/svg';
 import {fonts} from './src/assets/fonts/fonts';
+import DetailPage from './DetailPage';
 
 const data = [
-  {key: '1', title: '과자', icon: 'Snack'},
-  {key: '2', title: '음료', icon: 'Drink'},
-  {key: '3', title: '디저트', icon: 'Dessert'},
-  {key: '4', title: '라면', icon: 'Ramen'},
-  {key: '5', title: '생활용품', icon: 'Household_goods'},
-  {key: '6', title: '유제품', icon: 'Dairy_products'},
-  {key: '7', title: '의약용품', icon: 'Medicine'},
-  {key: '8', title: '주류', icon: 'Alcoholic'},
-  {key: '9', title: '미용', icon: 'Beauty'},
+  {key: 0, title: '과자', icon: 'Snack'},
+  {key: 1, title: '음료', icon: 'Drink'},
+  {key: 2, title: '디저트', icon: 'Dessert'},
+  {key: 3, title: '라면', icon: 'Ramen'},
+  {key: 4, title: '생활용품', icon: 'Household_goods'},
+  {key: 5, title: '유제품', icon: 'Dairy_products'},
+  {key: 6, title: '의약용품', icon: 'Medicine'},
+  {key: 7, title: '주류', icon: 'Alcoholic'},
+  {key: 8, title: '미용', icon: 'Beauty'},
 ];
 
 const App = () => {
+  const [showDetail, setShowDetail] = useState(false);
+  const [key, setKey] = useState();
+
+  const handlePress = key => {
+    setShowDetail(true);
+    setKey(key);
+    //console.log(data[key]);
+  };
+
+  // const data = [
+  //   {key: '1', title: '바나나킥1'},
+  //   {key: '2', title: '바나나킥2'},
+  //   {key: '3', title: '바나나킥3'},
+  // ];
+
   return (
     <SafeAreaProvider>
       <SafeAreaView
@@ -55,128 +71,134 @@ const App = () => {
           </View>
         </View>
         {/* 중간 부분 (매장 상태) */}
-        <View style={styles.background}>
-          <View
-            style={{
-              backgroundColor: '#ECECEC',
-              borderRadius: 32,
-              paddingBottom: 36,
-            }}>
+        {!showDetail ? (
+          <View style={styles.background}>
             <View
               style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingHorizontal: 32,
-                paddingVertical: 36,
+                backgroundColor: '#ECECEC',
+                borderRadius: 32,
+                paddingBottom: 36,
               }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Status style={{marginRight: 12}} />
-                <Text style={fonts.Subtitle1}>매장상태</Text>
-              </View>
-              <Text style={fonts.Subtitle1}>1월27일 토요일</Text>
-            </View>
-            <View
-              style={{
-                flexDirection: 'row',
-                justifyContent: 'space-between',
-                paddingHorizontal: 16,
-              }}>
-              {/* 온도 */}
-              <View style={styles.shadow}>
-                <View style={styles.status_box}>
-                  <View style={styles.status_top}>
-                    <Text style={[fonts.Subtitle2, {color: 'white'}]}>
-                      온도
-                    </Text>
-                  </View>
-                  <View style={styles.status_bottom}>
-                    <Text style={[fonts.H3, {color: 'black'}]}>26°C</Text>
-                  </View>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: 32,
+                  paddingVertical: 36,
+                }}>
+                <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                  <Status style={{marginRight: 12}} />
+                  <Text style={fonts.Subtitle1}>매장상태</Text>
                 </View>
+                <Text style={fonts.Subtitle1}>1월27일 토요일</Text>
               </View>
-              {/* 습도 */}
-              <View style={styles.shadow}>
-                <View style={styles.status_box}>
-                  <View style={styles.status_top}>
-                    <Text style={[fonts.Subtitle2, {color: 'white'}]}>
-                      습도
-                    </Text>
-                  </View>
-                  <View style={styles.status_bottom}>
-                    <Text style={[fonts.H3, {color: 'black'}]}>50%</Text>
-                  </View>
-                </View>
-              </View>
-              {/* 조도 */}
-              <View style={styles.shadow}>
-                <View style={styles.status_box}>
-                  <View style={styles.status_top}>
-                    <Text style={[fonts.Subtitle2, {color: 'white'}]}>
-                      조도
-                    </Text>
-                  </View>
-                  <View style={styles.status_bottom}>
-                    <Text style={[fonts.H3, {color: 'black'}]}>50%</Text>
-                  </View>
-                </View>
-              </View>
-            </View>
-          </View>
-          {/* 구분선 */}
-          <View style={{height: 12}} />
-          {/* 아래 */}
-          <View
-            style={{
-              backgroundColor: '#ECECEC',
-              borderRadius: 32,
-              flex: 1,
-            }}>
-            <FlatList
-              data={data}
-              numColumns={3}
-              renderItem={({item}) => (
-                <Pressable
-                  style={styles.category_box}
-                  onPress={() => console.log(item.title)}>
-                  {/* 빨간 알람 아이콘 */}
-                  {true && (
-                    <View style={styles.alarm}>
-                      {/* 알람 숫자 */}
-                      <Text style={[fonts.Subtitle2, {color: 'white'}]}>4</Text>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingHorizontal: 16,
+                }}>
+                {/* 온도 */}
+                <View style={styles.shadow}>
+                  <View style={styles.status_box}>
+                    <View style={styles.status_top}>
+                      <Text style={[fonts.Subtitle2, {color: 'white'}]}>
+                        온도
+                      </Text>
                     </View>
-                  )}
-                  {/* 카테고리 아이콘 */}
-                  <View
-                    style={{
-                      width: 52,
-                      height: 52,
-                      justifyContent: 'center',
-                      alignItems: 'center',
-                    }}>
-                    {item.icon === 'Snack' && <Snack />}
-                    {item.icon === 'Drink' && <Drink />}
-                    {item.icon === 'Dessert' && <Dessert />}
-                    {item.icon === 'Ramen' && <Ramen />}
-                    {item.icon === 'Household_goods' && <Household_goods />}
-                    {item.icon === 'Dairy_products' && <Dairy_products />}
-                    {item.icon === 'Medicine' && <Medicine />}
-                    {item.icon === 'Alcoholic' && <Alcoholic />}
-                    {item.icon === 'Beauty' && <Beauty />}
+                    <View style={styles.status_bottom}>
+                      <Text style={[fonts.H3, {color: 'black'}]}>26°C</Text>
+                    </View>
                   </View>
-                  <Text style={fonts.Subtitle3}>{item.title}</Text>
-                </Pressable>
-              )}
-              keyExtractor={item => item.key}
-              contentContainerStyle={{
-                paddingVertical: 42,
+                </View>
+                {/* 습도 */}
+                <View style={styles.shadow}>
+                  <View style={styles.status_box}>
+                    <View style={styles.status_top}>
+                      <Text style={[fonts.Subtitle2, {color: 'white'}]}>
+                        습도
+                      </Text>
+                    </View>
+                    <View style={styles.status_bottom}>
+                      <Text style={[fonts.H3, {color: 'black'}]}>50%</Text>
+                    </View>
+                  </View>
+                </View>
+                {/* 조도 */}
+                <View style={styles.shadow}>
+                  <View style={styles.status_box}>
+                    <View style={styles.status_top}>
+                      <Text style={[fonts.Subtitle2, {color: 'white'}]}>
+                        조도
+                      </Text>
+                    </View>
+                    <View style={styles.status_bottom}>
+                      <Text style={[fonts.H3, {color: 'black'}]}>50%</Text>
+                    </View>
+                  </View>
+                </View>
+              </View>
+            </View>
+            {/* 구분선 */}
+            <View style={{height: 12}} />
+            {/* 아래 */}
+            <View
+              style={{
+                backgroundColor: '#ECECEC',
+                borderRadius: 32,
                 flex: 1,
-                justifyContent: 'space-between',
-                alignItems: 'center',
-              }}
-              scrollEnabled={false}
-            />
+              }}>
+              <FlatList
+                data={data}
+                numColumns={3}
+                renderItem={({item}) => (
+                  <Pressable
+                    style={styles.category_box}
+                    onPress={() => handlePress(item.key)}>
+                    {/* 빨간 알람 아이콘 */}
+                    {true && (
+                      <View style={styles.alarm}>
+                        {/* 알람 숫자 */}
+                        <Text style={[fonts.Subtitle2, {color: 'white'}]}>
+                          4
+                        </Text>
+                      </View>
+                    )}
+                    {/* 카테고리 아이콘 */}
+                    <View
+                      style={{
+                        width: 52,
+                        height: 52,
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                      }}>
+                      {item.icon === 'Snack' && <Snack />}
+                      {item.icon === 'Drink' && <Drink />}
+                      {item.icon === 'Dessert' && <Dessert />}
+                      {item.icon === 'Ramen' && <Ramen />}
+                      {item.icon === 'Household_goods' && <Household_goods />}
+                      {item.icon === 'Dairy_products' && <Dairy_products />}
+                      {item.icon === 'Medicine' && <Medicine />}
+                      {item.icon === 'Alcoholic' && <Alcoholic />}
+                      {item.icon === 'Beauty' && <Beauty />}
+                    </View>
+                    <Text style={fonts.Subtitle3}>{item.title}</Text>
+                  </Pressable>
+                )}
+                keyExtractor={item => item.key}
+                contentContainerStyle={{
+                  paddingVertical: 42,
+                  flex: 1,
+                  justifyContent: 'space-between',
+                  alignItems: 'center',
+                }}
+                scrollEnabled={false}
+              />
+            </View>
           </View>
-        </View>
+        ) : (
+          <DetailPage setShowDetail={setShowDetail} index={key} />
+        )}
       </SafeAreaView>
     </SafeAreaProvider>
   );
