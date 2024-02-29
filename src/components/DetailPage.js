@@ -8,9 +8,9 @@ import {
   Image,
   Modal,
 } from 'react-native';
-import {fonts} from './src/assets/fonts/fonts';
+import {fonts} from '../assets/fonts/fonts';
 
-const snackImage = require('./assets/images/snack_bananakick.jpeg');
+const snackImage = require('../assets/images/snack_bananakick.jpeg');
 
 const DetailPage = ({setShowDetail, index}) => {
   const [items, setItems] = useState([]);

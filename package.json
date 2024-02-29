@@ -7,7 +7,8 @@
     "ios": "react-native run-ios --simulator=\"iPhone 15 Pro\"",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "pod": "cd ios && pod install && cd .."
   },
   "dependencies": {
     "react": "17.0.2",
