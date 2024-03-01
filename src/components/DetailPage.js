@@ -21,6 +21,15 @@ const DetailPage = ({setShowDetail, index}) => {
       {key: '1', title: '바나나킥1'},
       {key: '2', title: '바나나킥2'},
       {key: '3', title: '바나나킥3'},
+      {key: '4', title: '바나나킥1'},
+      {key: '5', title: '바나나킥2'},
+      {key: '6', title: '바나나킥3'},
+      {key: '7', title: '바나나킥1'},
+      {key: '8', title: '바나나킥2'},
+      {key: '9', title: '바나나킥3'},
+      {key: '10', title: '바나나킥1'},
+      {key: '11', title: '바나나킥2'},
+      {key: '12', title: '바나나킥3'},
     ],
 
     [
@@ -71,6 +80,7 @@ const DetailPage = ({setShowDetail, index}) => {
         <FlatList
           data={items}
           numColumns={1}
+          style={{width: '100%'}}
           renderItem={({item}) => (
             <View
               style={{
@@ -97,38 +107,18 @@ const DetailPage = ({setShowDetail, index}) => {
                     0/2
                   </Text>
                 </View>
+                <Pressable
+                  onPress={handleOrder}
+                  style={[styles.orderButton, {marginLeft: 60}]}>
+                  <Text
+                    style={[
+                      fonts.Subtitle2,
+                      {color: 'white', textAlign: 'center'},
+                    ]}>
+                    주문하기
+                  </Text>
+                </Pressable>
               </View>
-              <Pressable
-                onPress={handleOrder}
-                style={[styles.orderButton, {marginLeft: 60}]}>
-                <Text
-                  style={[
-                    fonts.Subtitle2,
-                    {color: 'white'},
-                    {textAlign: 'center'},
-                  ]}>
-                  주문하기
-                </Text>
-              </Pressable>
-              <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => {
-                  closeModal();
-                }}>
-                {/* 모달 내용 */}
-                <View style={styles.centeredView}>
-                  <View style={styles.modalView}>
-                    <Text style={styles.modalText}>주문되었습니다!</Text>
-                    <Pressable
-                      style={[styles.button, styles.buttonClose]}
-                      onPress={() => closeModal()}>
-                      <Text style={styles.textStyle}>닫기</Text>
-                    </Pressable>
-                  </View>
-                </View>
-              </Modal>
             </View>
           )}
           keyExtractor={item => item.key}
@@ -136,11 +126,29 @@ const DetailPage = ({setShowDetail, index}) => {
             justifyContent: 'space-between',
             alignItems: 'center',
           }}
-          scrollEnabled={false}
         />
+        <Modal
+          animationType="slide"
+          transparent={true}
+          visible={modalVisible}
+          onRequestClose={() => {
+            closeModal();
+          }}>
+          {/* 모달 내용 */}
+          <View style={styles.centeredView}>
+            <View style={styles.modalView}>
+              <Text style={styles.modalText}>주문되었습니다!</Text>
+              <Pressable
+                style={[styles.button, styles.buttonClose]}
+                onPress={() => closeModal()}>
+                <Text style={styles.textStyle}>닫기</Text>
+              </Pressable>
+            </View>
+          </View>
+        </Modal>
         <Pressable onPress={handleGoBack} style={styles.goBackButton}>
           <Text
-            style={[fonts.Subtitle2, {color: 'white'}, {textAlign: 'center'}]}>
+            style={[fonts.Subtitle2, {color: 'white', textAlign: 'center'}]}>
             돌아가기
           </Text>
         </Pressable>
