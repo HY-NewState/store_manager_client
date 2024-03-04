@@ -87,7 +87,6 @@ const AlarmPage = ({setShowAlarm}) => {
           renderItem={({item}) => {
             return (
               <View style={styles.alarmItem}>
-                <View style={styles.redDots}></View>
                 <Text
                   style={[fonts.Subtitle2, {marginTop: 10, marginLeft: 22}]}>
                   {item.title}
@@ -141,15 +140,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 2,
   },
-  redDots: {
-    position: 'absolute',
-    right: 10,
-    top: 10,
-    width: 8,
-    height: 8,
-    borderRadius: 10,
-    backgroundColor: '#F64444',
-  },
+
   DateText: [
     fonts.Caption1,
     {

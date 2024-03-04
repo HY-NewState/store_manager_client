@@ -20,20 +20,21 @@ import AlarmPage from './src/components/AlarmPage';
 import getDate from './src/util/getDate';
 
 const data = [
-  {key: 0, title: '과자', icon: 'Snack'},
-  {key: 1, title: '음료', icon: 'Drink'},
-  {key: 2, title: '디저트', icon: 'Dessert'},
-  {key: 3, title: '라면', icon: 'Ramen'},
-  {key: 4, title: '생활용품', icon: 'Household_goods'},
-  {key: 5, title: '유제품', icon: 'Dairy_products'},
-  {key: 6, title: '의약용품', icon: 'Medicine'},
-  {key: 7, title: '주류', icon: 'Alcoholic'},
-  {key: 8, title: '미용', icon: 'Beauty'},
+  {key: 0, title: '과자', icon: 'Snack', alarmCount: 2},
+  {key: 1, title: '음료', icon: 'Drink', alarmCount: 4},
+  {key: 2, title: '디저트', icon: 'Dessert', alarmCount: 1},
+  {key: 3, title: '라면', icon: 'Ramen', alarmCount: 3},
+  {key: 4, title: '생활용품', icon: 'Household_goods', alarmCount: 0},
+  {key: 5, title: '유제품', icon: 'Dairy_products', alarmCount: 0},
+  {key: 6, title: '의약용품', icon: 'Medicine', alarmCount: 0},
+  {key: 7, title: '주류', icon: 'Alcoholic', alarmCount: 2},
+  {key: 8, title: '미용', icon: 'Beauty', alarmCount: 0},
 ];
 
 const App = () => {
   const [showDetail, setShowDetail] = useState(false);
   const [showAlarm, setShowAlarm] = useState(false);
+  const [showRedDot, setShowRedDot] = useState(false);
   const [key, setKey] = useState();
 
   const handlePress = key => {
@@ -44,6 +45,7 @@ const App = () => {
 
   const AlarmPress = () => {
     setShowAlarm(true);
+    setShowRedDot(true);
   };
 
   // const data = [
@@ -79,6 +81,7 @@ const App = () => {
               {/* 알람 */}
               <View style={{justifyContent: 'center'}}>
                 <Pressable onPress={AlarmPress}>
+                  {!showRedDot && <View style={styles.redDots}></View>}
                   <Alarm />
                 </Pressable>
               </View>
@@ -169,11 +172,11 @@ const App = () => {
                         style={styles.category_box}
                         onPress={() => handlePress(item.key)}>
                         {/* 빨간 알람 아이콘 */}
-                        {true && (
+                        {item.alarmCount > 0 && (
                           <View style={styles.alarm}>
                             {/* 알람 숫자 */}
                             <Text style={[fonts.Subtitle2, {color: 'white'}]}>
-                              4
+                              {item.alarmCount}
                             </Text>
                           </View>
                         )}
@@ -291,6 +294,15 @@ const styles = StyleSheet.create({
     right: 0,
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  redDots: {
+    position: 'absolute',
+    right: 1,
+    top: -2,
+    width: 8,
+    height: 8,
+    borderRadius: 10,
+    backgroundColor: '#F64444',
   },
 });
 

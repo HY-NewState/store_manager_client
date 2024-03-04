@@ -18,24 +18,24 @@ const DetailPage = ({setShowDetail, index}) => {
 
   const mainData = [
     [
-      {key: '1', title: '바나나킥1'},
-      {key: '2', title: '바나나킥2'},
-      {key: '3', title: '바나나킥3'},
-      {key: '4', title: '바나나킥1'},
-      {key: '5', title: '바나나킥2'},
-      {key: '6', title: '바나나킥3'},
-      {key: '7', title: '바나나킥1'},
-      {key: '8', title: '바나나킥2'},
-      {key: '9', title: '바나나킥3'},
-      {key: '10', title: '바나나킥1'},
-      {key: '11', title: '바나나킥2'},
-      {key: '12', title: '바나나킥3'},
+      {key: '1', title: '바나나킥1', amount: 2},
+      {key: '2', title: '바나나킥2', amount: 0},
+      {key: '3', title: '바나나킥3', amount: 2},
+      {key: '4', title: '바나나킥1', amount: 1},
+      {key: '5', title: '바나나킥2', amount: 2},
+      {key: '6', title: '바나나킥3', amount: 0},
+      {key: '7', title: '바나나킥1', amount: 0},
+      {key: '8', title: '바나나킥2', amount: 2},
+      {key: '9', title: '바나나킥3', amount: 2},
+      {key: '10', title: '바나나킥1', amount: 1},
+      {key: '11', title: '바나나킥2', amount: 0},
+      {key: '12', title: '바나나킥3', amount: 0},
     ],
 
     [
-      {key: '1', title: '사이다1'},
-      {key: '2', title: '사이다2'},
-      {key: '3', title: '사이다3'},
+      {key: '1', title: '사이다1', amount: 2},
+      {key: '2', title: '사이다2', amount: 0},
+      {key: '3', title: '사이다3', amount: 2},
     ],
   ];
 
@@ -98,14 +98,25 @@ const DetailPage = ({setShowDetail, index}) => {
                   <Text style={[fonts.Subtitle2, {textAlign: 'center'}]}>
                     {item.title}
                   </Text>
-                  <Text
-                    style={[
-                      fonts.Subtitle2,
-                      {color: 'red'},
-                      {textAlign: 'center'},
-                    ]}>
-                    0/2
-                  </Text>
+                  {item.amount > 0 ? (
+                    <Text
+                      style={[
+                        fonts.Subtitle2,
+                        {color: 'black'},
+                        {textAlign: 'center'},
+                      ]}>
+                      {item.amount}/2
+                    </Text>
+                  ) : (
+                    <Text
+                      style={[
+                        fonts.Subtitle2,
+                        {color: 'red'},
+                        {textAlign: 'center'},
+                      ]}>
+                      {item.amount}/2
+                    </Text>
+                  )}
                 </View>
                 <Pressable
                   onPress={handleOrder}
@@ -164,13 +175,20 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   goBackButton: {
+    position: 'absolute',
     alignItems: 'center',
-    justifyContent: 'space-between',
-    marginBottom: 20,
     width: 100,
     padding: 10,
     backgroundColor: '#0247F9',
     borderRadius: 16,
+    bottom: 40,
+    shadowColor: 'black',
+    shadowOffset: {
+      width: 0,
+      height: 4,
+    },
+    shadowOpacity: 0.5,
+    shadowRadius: 2,
   },
   image: {
     width: 80,
