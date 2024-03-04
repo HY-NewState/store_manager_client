@@ -9,3 +9,4 @@ export {default as Medicine} from './medicine.svg';
 export {default as Ramen} from './ramen.svg';
 export {default as Snack} from './snack.svg';
 export {default as Alarm} from './alarm.svg';
+export {default as Arrow} from './arrow.svg';

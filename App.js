@@ -16,6 +16,7 @@ import {
 } from './src/assets/icons/svg';
 import {fonts} from './src/assets/fonts/fonts';
 import DetailPage from './src/components/DetailPage';
+import AlarmPage from './src/components/AlarmPage';
 import getDate from './src/util/getDate';
 
 const data = [
@@ -32,12 +33,17 @@ const data = [
 
 const App = () => {
   const [showDetail, setShowDetail] = useState(false);
+  const [showAlarm, setShowAlarm] = useState(false);
   const [key, setKey] = useState();
 
   const handlePress = key => {
     setShowDetail(true);
     setKey(key);
     //console.log(data[key]);
+  };
+
+  const AlarmPress = () => {
+    setShowAlarm(true);
   };
 
   // const data = [
@@ -51,154 +57,164 @@ const App = () => {
       <SafeAreaView
         style={{backgroundColor: '#0247F9', flex: 1}}
         edges={['top']}>
-        {/* 위 부분 (소개) */}
-        <View style={styles.intro_container}>
-          <View>
-            <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
-              <Text style={[fonts.H3, {color: 'white'}]}>이승섭</Text>
-              <Text style={[fonts.Body1, {color: 'white'}]}>
-                님, 안녕하세요.
-              </Text>
-            </View>
-            <View>
-              <Text style={[fonts.Body1, {color: 'white'}]}>
-                세븐일레븐 한양대학교 에리카점
-              </Text>
-            </View>
-          </View>
-          {/* 알람 */}
-          <View style={{justifyContent: 'center'}}>
-            <Alarm />
-          </View>
-        </View>
-        {/* 중간 부분 (매장 상태) */}
-        {!showDetail ? (
-          <View style={styles.background}>
-            <View
-              style={{
-                backgroundColor: '#ECECEC',
-                borderRadius: 32,
-                paddingBottom: 36,
-              }}>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingHorizontal: 32,
-                  paddingVertical: 36,
-                }}>
-                <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                  <Status style={{marginRight: 12}} />
-                  <Text style={fonts.Subtitle1}>매장상태</Text>
+        {/* 알람 화면 */}
+        {showAlarm && <AlarmPage setShowAlarm={setShowAlarm} />}
+        {/* 나머지 페이지 */}
+        {!showAlarm && (
+          <View style={{flex: 1}}>
+            <View style={styles.intro_container}>
+              <View>
+                <View style={{flexDirection: 'row', alignItems: 'flex-end'}}>
+                  <Text style={[fonts.H3, {color: 'white'}]}>이승섭</Text>
+                  <Text style={[fonts.Body1, {color: 'white'}]}>
+                    님, 안녕하세요.
+                  </Text>
                 </View>
-                <Text style={fonts.Subtitle1}>{getDate()}</Text>
-              </View>
-              <View
-                style={{
-                  flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingHorizontal: 16,
-                }}>
-                {/* 온도 */}
-                <View style={styles.shadow}>
-                  <View style={styles.status_box}>
-                    <View style={styles.status_top}>
-                      <Text style={[fonts.Subtitle2, {color: 'white'}]}>
-                        온도
-                      </Text>
-                    </View>
-                    <View style={styles.status_bottom}>
-                      <Text style={[fonts.H3, {color: 'black'}]}>26°C</Text>
-                    </View>
-                  </View>
-                </View>
-                {/* 습도 */}
-                <View style={styles.shadow}>
-                  <View style={styles.status_box}>
-                    <View style={styles.status_top}>
-                      <Text style={[fonts.Subtitle2, {color: 'white'}]}>
-                        습도
-                      </Text>
-                    </View>
-                    <View style={styles.status_bottom}>
-                      <Text style={[fonts.H3, {color: 'black'}]}>50%</Text>
-                    </View>
-                  </View>
-                </View>
-                {/* 조도 */}
-                <View style={styles.shadow}>
-                  <View style={styles.status_box}>
-                    <View style={styles.status_top}>
-                      <Text style={[fonts.Subtitle2, {color: 'white'}]}>
-                        조도
-                      </Text>
-                    </View>
-                    <View style={styles.status_bottom}>
-                      <Text style={[fonts.H3, {color: 'black'}]}>50%</Text>
-                    </View>
-                  </View>
+                <View>
+                  <Text style={[fonts.Body1, {color: 'white'}]}>
+                    세븐일레븐 한양대학교 에리카점
+                  </Text>
                 </View>
               </View>
+              {/* 알람 */}
+              <View style={{justifyContent: 'center'}}>
+                <Pressable onPress={AlarmPress}>
+                  <Alarm />
+                </Pressable>
+              </View>
             </View>
-            {/* 구분선 */}
-            <View style={{height: 12}} />
-            {/* 아래 */}
-            <View
-              style={{
-                backgroundColor: '#ECECEC',
-                borderRadius: 32,
-                flex: 1,
-              }}>
-              <FlatList
-                data={data}
-                numColumns={3}
-                renderItem={({item}) => (
-                  <Pressable
-                    style={styles.category_box}
-                    onPress={() => handlePress(item.key)}>
-                    {/* 빨간 알람 아이콘 */}
-                    {true && (
-                      <View style={styles.alarm}>
-                        {/* 알람 숫자 */}
-                        <Text style={[fonts.Subtitle2, {color: 'white'}]}>
-                          4
-                        </Text>
+            {/* 중간 부분 (매장 상태) */}
+            {!showDetail ? (
+              <View style={styles.background}>
+                <View
+                  style={{
+                    backgroundColor: '#ECECEC',
+                    borderRadius: 32,
+                    paddingBottom: 36,
+                  }}>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      paddingHorizontal: 32,
+                      paddingVertical: 36,
+                    }}>
+                    <View style={{flexDirection: 'row', alignItems: 'center'}}>
+                      <Status style={{marginRight: 12}} />
+                      <Text style={fonts.Subtitle1}>매장상태</Text>
+                    </View>
+                    <Text style={fonts.Subtitle1}>{getDate()}</Text>
+                  </View>
+                  <View
+                    style={{
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      paddingHorizontal: 16,
+                    }}>
+                    {/* 온도 */}
+                    <View style={styles.shadow}>
+                      <View style={styles.status_box}>
+                        <View style={styles.status_top}>
+                          <Text style={[fonts.Subtitle2, {color: 'white'}]}>
+                            온도
+                          </Text>
+                        </View>
+                        <View style={styles.status_bottom}>
+                          <Text style={[fonts.H3, {color: 'black'}]}>26°C</Text>
+                        </View>
                       </View>
-                    )}
-                    {/* 카테고리 아이콘 */}
-                    <View
-                      style={{
-                        width: 52,
-                        height: 52,
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      {item.icon === 'Snack' && <Snack />}
-                      {item.icon === 'Drink' && <Drink />}
-                      {item.icon === 'Dessert' && <Dessert />}
-                      {item.icon === 'Ramen' && <Ramen />}
-                      {item.icon === 'Household_goods' && <Household_goods />}
-                      {item.icon === 'Dairy_products' && <Dairy_products />}
-                      {item.icon === 'Medicine' && <Medicine />}
-                      {item.icon === 'Alcoholic' && <Alcoholic />}
-                      {item.icon === 'Beauty' && <Beauty />}
                     </View>
-                    <Text style={fonts.Subtitle3}>{item.title}</Text>
-                  </Pressable>
-                )}
-                keyExtractor={item => item.key}
-                contentContainerStyle={{
-                  paddingVertical: 42,
-                  flex: 1,
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-                scrollEnabled={false}
-              />
-            </View>
+                    {/* 습도 */}
+                    <View style={styles.shadow}>
+                      <View style={styles.status_box}>
+                        <View style={styles.status_top}>
+                          <Text style={[fonts.Subtitle2, {color: 'white'}]}>
+                            습도
+                          </Text>
+                        </View>
+                        <View style={styles.status_bottom}>
+                          <Text style={[fonts.H3, {color: 'black'}]}>50%</Text>
+                        </View>
+                      </View>
+                    </View>
+                    {/* 조도 */}
+                    <View style={styles.shadow}>
+                      <View style={styles.status_box}>
+                        <View style={styles.status_top}>
+                          <Text style={[fonts.Subtitle2, {color: 'white'}]}>
+                            조도
+                          </Text>
+                        </View>
+                        <View style={styles.status_bottom}>
+                          <Text style={[fonts.H3, {color: 'black'}]}>50%</Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
+                </View>
+                {/* 구분선 */}
+                <View style={{height: 12}} />
+                {/* 아래 */}
+                <View
+                  style={{
+                    backgroundColor: '#ECECEC',
+                    borderRadius: 32,
+                    flex: 1,
+                  }}>
+                  <FlatList
+                    data={data}
+                    numColumns={3}
+                    renderItem={({item}) => (
+                      <Pressable
+                        style={styles.category_box}
+                        onPress={() => handlePress(item.key)}>
+                        {/* 빨간 알람 아이콘 */}
+                        {true && (
+                          <View style={styles.alarm}>
+                            {/* 알람 숫자 */}
+                            <Text style={[fonts.Subtitle2, {color: 'white'}]}>
+                              4
+                            </Text>
+                          </View>
+                        )}
+                        {/* 카테고리 아이콘 */}
+                        <View
+                          style={{
+                            width: 52,
+                            height: 52,
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          {item.icon === 'Snack' && <Snack />}
+                          {item.icon === 'Drink' && <Drink />}
+                          {item.icon === 'Dessert' && <Dessert />}
+                          {item.icon === 'Ramen' && <Ramen />}
+                          {item.icon === 'Household_goods' && (
+                            <Household_goods />
+                          )}
+                          {item.icon === 'Dairy_products' && <Dairy_products />}
+                          {item.icon === 'Medicine' && <Medicine />}
+                          {item.icon === 'Alcoholic' && <Alcoholic />}
+                          {item.icon === 'Beauty' && <Beauty />}
+                        </View>
+                        <Text style={fonts.Subtitle3}>{item.title}</Text>
+                      </Pressable>
+                    )}
+                    keyExtractor={item => item.key}
+                    contentContainerStyle={{
+                      paddingVertical: 42,
+                      flex: 1,
+                      justifyContent: 'space-between',
+                      alignItems: 'center',
+                    }}
+                    scrollEnabled={false}
+                  />
+                </View>
+              </View>
+            ) : (
+              <DetailPage setShowDetail={setShowDetail} index={key} />
+            )}
           </View>
-        ) : (
-          <DetailPage setShowDetail={setShowDetail} index={key} />
         )}
       </SafeAreaView>
     </SafeAreaProvider>
