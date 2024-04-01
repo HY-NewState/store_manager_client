@@ -1,4 +1,5 @@
 import {useState, useEffect} from 'react';
+import axios from "axios";
 import {
   FlatList,
   View,
@@ -12,32 +13,10 @@ import {fonts} from '../assets/fonts/fonts';
 
 const snackImage = require('../assets/images/snack_bananakick.jpeg');
 
-const DetailPage = ({setShowDetail, index}) => {
+const DetailPage = ({setShowDetail, index }) => {
   const [items, setItems] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
 
-  const mainData = [
-    [
-      {key: '1', title: '바나나킥1', amount: 2},
-      {key: '2', title: '바나나킥2', amount: 0},
-      {key: '3', title: '바나나킥3', amount: 2},
-      {key: '4', title: '바나나킥1', amount: 1},
-      {key: '5', title: '바나나킥2', amount: 2},
-      {key: '6', title: '바나나킥3', amount: 0},
-      {key: '7', title: '바나나킥1', amount: 0},
-      {key: '8', title: '바나나킥2', amount: 2},
-      {key: '9', title: '바나나킥3', amount: 2},
-      {key: '10', title: '바나나킥1', amount: 1},
-      {key: '11', title: '바나나킥2', amount: 0},
-      {key: '12', title: '바나나킥3', amount: 0},
-    ],
-
-    [
-      {key: '1', title: '사이다1', amount: 2},
-      {key: '2', title: '사이다2', amount: 0},
-      {key: '3', title: '사이다3', amount: 2},
-    ],
-  ];
 
   const handleGoBack = () => {
     setShowDetail(false);
@@ -52,9 +31,26 @@ const DetailPage = ({setShowDetail, index}) => {
   };
 
   useEffect(() => {
-    setItems(mainData[index]);
-    console.log(mainData[index]);
+    requestGet();
   }, []);
+
+  const requestGet = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/products');
+      const data = response.data;
+
+      const snackItems = data.products.filter(item => item.category === "1");
+      const drinkItems = data.products.filter(item => item.category === "2");
+
+      if (index === 0) {
+        setItems(snackItems);
+      } else if (index === 1) {
+        setItems(drinkItems);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  }; 
 
   return (
     <View style={styles.background}>
@@ -74,7 +70,7 @@ const DetailPage = ({setShowDetail, index}) => {
       <View
         style={{
           flex: 1,
-          justifyContent: 'center', // 가운데 정렬을 위한 스타일 추가
+          justifyContent: 'center',
           alignItems: 'center',
         }}>
         <FlatList
@@ -94,18 +90,18 @@ const DetailPage = ({setShowDetail, index}) => {
               }}>
               <View style={{flexDirection: 'row', alignItems: 'center'}}>
                 <Image source={snackImage} style={styles.image} />
-                <View style={{marginLeft: 60}}>
-                  <Text style={[fonts.Subtitle2, {textAlign: 'center'}]}>
-                    {item.title}
+                <View style={{marginLeft: 40}}>
+                  <Text style={[fonts.Subtitle2, {textAlign: 'center', width: 90}]}>
+                    {item.name}
                   </Text>
-                  {item.amount > 0 ? (
+                  {item.now_amount > 0 ? (
                     <Text
                       style={[
                         fonts.Subtitle2,
                         {color: 'black'},
                         {textAlign: 'center'},
                       ]}>
-                      {item.amount}/2
+                      {item.now_amount}/{item.amount}
                     </Text>
                   ) : (
                     <Text
@@ -114,13 +110,13 @@ const DetailPage = ({setShowDetail, index}) => {
                         {color: 'red'},
                         {textAlign: 'center'},
                       ]}>
-                      {item.amount}/2
+                      {item.now_amount}/{item.amount}
                     </Text>
                   )}
                 </View>
                 <Pressable
                   onPress={handleOrder}
-                  style={[styles.orderButton, {marginLeft: 60}]}>
+                  style={[styles.orderButton, {marginLeft: 40}]}>
                   <Text
                     style={[
                       fonts.Subtitle2,
@@ -132,7 +128,7 @@ const DetailPage = ({setShowDetail, index}) => {
               </View>
             </View>
           )}
-          keyExtractor={item => item.key}
+          keyExtractor={(item) => item._id}
           contentContainerStyle={{
             justifyContent: 'space-between',
             alignItems: 'center',

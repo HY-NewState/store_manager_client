@@ -1,58 +1,35 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
+import {useState, useEffect} from 'react';
+import axios from "axios";
 import {FlatList, View, Text, StyleSheet, Pressable} from 'react-native';
 import {Arrow} from '../assets/icons/svg';
-
-import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import {fonts} from '../assets/fonts/fonts';
 
-const mainData = [
-  {
-    key: '1',
-    title: '바나나킥을 주문해주세요!',
-    body: '바나나킥 재고가 다 떨어졌습니다!',
-    date: '2024-03-02',
-    isRead: false,
-  },
-  {
-    key: '2',
-    title: '바나나킥을 주문해주세요!',
-    body: '바나나킥 재고가 다 떨어졌습니다!',
-    date: '2024-03-02',
-    isRead: false,
-  },
-  {
-    key: '3',
-    title: '바나나킥을 주문해주세요!',
-    body: '바나나킥 재고가 다 떨어졌습니다!',
-    date: '2024-03-02',
-    isRead: false,
-  },
-  {
-    key: '4',
-    title: '바나나킥을 주문해주세요!',
-    body: '바나나킥 재고가 다 떨어졌습니다!',
-    date: '2024-03-02',
-    isRead: false,
-  },
-  {
-    key: '5',
-    title: '바나나킥을 주문해주세요!',
-    body: '바나나킥 재고가 다 떨어졌습니다!',
-    date: '2024-03-02',
-    isRead: false,
-  },
-  {
-    key: '6',
-    title: '바나나킥을 주문해주세요!',
-    body: '바나나킥 재고가 다 떨어졌습니다!',
-    date: '2024-03-02',
-    isRead: false,
-  },
-];
+
 
 const AlarmPage = ({setShowAlarm}) => {
+  const [items, setItems] = useState([]);
+
   const handleGoBack = () => {
     setShowAlarm(false); // 알람 페이지를 닫음
+  };
+
+  useEffect(() => {
+    requestAlarmGet();
+  }, []);
+
+  const requestAlarmGet = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/alarms');
+      const data = response.data;
+
+ 
+      setItems(data.alarms);
+      console.log(data.alarms);
+      //console.log(items);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   return (
@@ -77,7 +54,7 @@ const AlarmPage = ({setShowAlarm}) => {
       </View>
       <View style={styles.background}>
         <FlatList
-          data={mainData}
+          data={items}
           numColumns={1}
           style={{
             width: '100%',
@@ -98,7 +75,7 @@ const AlarmPage = ({setShowAlarm}) => {
               </View>
             );
           }}
-          keyExtractor={item => item.key}
+          keyExtractor={(item) => item._id}
           contentContainerStyle={{
             justifyContent: 'space-between',
             alignItems: 'center',

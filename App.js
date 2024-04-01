@@ -1,6 +1,7 @@
-import React, {useState} from 'react';
+import React, {useState, useEffect} from 'react';
 import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
+import axios from "axios";
 import {
   Alarm,
   Alcoholic,
@@ -18,29 +19,83 @@ import {fonts} from './src/assets/fonts/fonts';
 import DetailPage from './src/components/DetailPage';
 import AlarmPage from './src/components/AlarmPage';
 import getDate from './src/util/getDate';
+import io from 'socket.io-client';
 
-const data = [
-  {key: 0, title: '과자', icon: 'Snack', alarmCount: 2},
-  {key: 1, title: '음료', icon: 'Drink', alarmCount: 4},
-  {key: 2, title: '디저트', icon: 'Dessert', alarmCount: 1},
-  {key: 3, title: '라면', icon: 'Ramen', alarmCount: 3},
-  {key: 4, title: '생활용품', icon: 'Household_goods', alarmCount: 0},
-  {key: 5, title: '유제품', icon: 'Dairy_products', alarmCount: 0},
-  {key: 6, title: '의약용품', icon: 'Medicine', alarmCount: 0},
-  {key: 7, title: '주류', icon: 'Alcoholic', alarmCount: 2},
-  {key: 8, title: '미용', icon: 'Beauty', alarmCount: 0},
-];
+
+const socket = io('http://localhost:3000');
 
 const App = () => {
   const [showDetail, setShowDetail] = useState(false);
   const [showAlarm, setShowAlarm] = useState(false);
   const [showRedDot, setShowRedDot] = useState(false);
   const [key, setKey] = useState();
+  const [snackAlarmCount, setsnackAlarmCount] = useState(0);
+  const [drinkAlarmCount, setdrinkAlarmCount] = useState(0);
+  const [sensorData, setSensorData] = useState([]); 
+
+
+  
+
+  useEffect(() => {
+    const fetchDataInterval = setInterval(() => {
+      fetchData();
+    }, 1000);
+  
+
+    return () => {
+      clearInterval(fetchDataInterval);
+    };
+  }, []);
+
+
+  const fetchData = async () => {
+    try {
+      const response = await axios.get('http://localhost:3000/products');
+      const responseData = response.data.products;
+      socket.on('sensorData', data => {
+        let { light, temp, humi } = data;
+        light = Math.round((light * 100) / 1023);
+        
+        // console.log(light); // light 값을 출력하여 확인
+        // console.log(temp); // temp 값을 출력하여 확인
+        // console.log(humi); // humi 값을 출력하여 확인
+    
+        // 이전 상태를 직접 수정하고 새로운 배열을 생성하지 않음
+        setSensorData([light, temp, humi]);
+      });
+  
+      const snackItems = responseData.filter(item => item.category === '1');
+      const drinkItems = responseData.filter(item => item.category === '2');
+
+  
+      setsnackAlarmCount(snackItems.filter(item => item.now_amount === 0).length);
+      setdrinkAlarmCount(drinkItems.filter(item => item.now_amount === 0).length);
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  useEffect(() => {
+    setShowRedDot(false);
+  }, [snackAlarmCount, drinkAlarmCount]);
+
+
+  const data = [
+    {key: 0, title: '과자', icon: 'Snack', count : snackAlarmCount},
+    {key: 1, title: '음료', icon: 'Drink', count : drinkAlarmCount},
+    {key: 2, title: '디저트', icon: 'Dessert', count : 0},
+    {key: 3, title: '라면', icon: 'Ramen', count : 0},
+    {key: 4, title: '생활용품', icon: 'Household_goods', count : 0},
+    {key: 5, title: '유제품', icon: 'Dairy_products', count : 0},
+    {key: 6, title: '의약용품', icon: 'Medicine', count : 0},
+    {key: 7, title: '주류', icon: 'Alcoholic', count : 0},
+    {key: 8, title: '미용', icon: 'Beauty', count : 0},
+  ];
 
   const handlePress = key => {
     setShowDetail(true);
     setKey(key);
-    //console.log(data[key]);
   };
 
   const AlarmPress = () => {
@@ -48,11 +103,6 @@ const App = () => {
     setShowRedDot(true);
   };
 
-  // const data = [
-  //   {key: '1', title: '바나나킥1'},
-  //   {key: '2', title: '바나나킥2'},
-  //   {key: '3', title: '바나나킥3'},
-  // ];
 
   return (
     <SafeAreaProvider>
@@ -70,6 +120,7 @@ const App = () => {
                   <Text style={[fonts.H3, {color: 'white'}]}>이승섭</Text>
                   <Text style={[fonts.Body1, {color: 'white'}]}>
                     님, 안녕하세요.
+                    {/* {socketData && <Text>{JSON.stringify(socketData)}</Text>} */}
                   </Text>
                 </View>
                 <View>
@@ -123,7 +174,8 @@ const App = () => {
                           </Text>
                         </View>
                         <View style={styles.status_bottom}>
-                          <Text style={[fonts.H3, {color: 'black'}]}>26°C</Text>
+                          <Text style={[fonts.H3, {color: 'black'}]}>{sensorData[1]}'C</Text>
+                          {/* <Text style={[fonts.H3, {color: 'black'}]}>19'C</Text> */}
                         </View>
                       </View>
                     </View>
@@ -136,7 +188,8 @@ const App = () => {
                           </Text>
                         </View>
                         <View style={styles.status_bottom}>
-                          <Text style={[fonts.H3, {color: 'black'}]}>50%</Text>
+                          <Text style={[fonts.H3, {color: 'black'}]}>{sensorData[2]}%</Text>
+                          {/* <Text style={[fonts.H3, {color: 'black'}]}>50%</Text> */}
                         </View>
                       </View>
                     </View>
@@ -149,7 +202,8 @@ const App = () => {
                           </Text>
                         </View>
                         <View style={styles.status_bottom}>
-                          <Text style={[fonts.H3, {color: 'black'}]}>50%</Text>
+                          <Text style={[fonts.H3, {color: 'black'}]}>{sensorData[0]}%</Text>
+                          {/* <Text style={[fonts.H3, {color: 'black'}]}>50%</Text> */}
                         </View>
                       </View>
                     </View>
@@ -172,11 +226,11 @@ const App = () => {
                         style={styles.category_box}
                         onPress={() => handlePress(item.key)}>
                         {/* 빨간 알람 아이콘 */}
-                        {item.alarmCount > 0 && (
+                        {item.count > 0 && (
                           <View style={styles.alarm}>
                             {/* 알람 숫자 */}
                             <Text style={[fonts.Subtitle2, {color: 'white'}]}>
-                              {item.alarmCount}
+                              {item.count}
                             </Text>
                           </View>
                         )}
