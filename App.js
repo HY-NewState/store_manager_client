@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, Pressable, StyleSheet, Text, View} from 'react-native';
+import {FlatList, Pressable, Switch, StyleSheet, Text, View} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
 import axios from "axios";
 import {
@@ -28,6 +28,7 @@ const App = () => {
   const [showDetail, setShowDetail] = useState(false);
   const [showAlarm, setShowAlarm] = useState(false);
   const [showRedDot, setShowRedDot] = useState(false);
+  const [onoff , setonoff] = useState(false);
   const [key, setKey] = useState();
   const [snackAlarmCount, setsnackAlarmCount] = useState(0);
   const [drinkAlarmCount, setdrinkAlarmCount] = useState(0);
@@ -80,6 +81,18 @@ const App = () => {
     setShowRedDot(false);
   }, [snackAlarmCount, drinkAlarmCount]);
 
+  useEffect(() => {
+    // 컴포넌트가 처음 렌더링될 때 서버에서 onoff 상태를 가져옴
+    axios.get('http://localhost:3000/onoff')
+      .then(response => {
+        console.log(response.data); // 서버에서 받은 onoff 값 출력
+        setonoff(response.data); // 서버에서 받은 상태로 업데이트
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  }, []);
+
 
   const data = [
     {key: 0, title: '과자', icon: 'Snack', count : snackAlarmCount},
@@ -102,6 +115,23 @@ const App = () => {
     setShowAlarm(true);
     setShowRedDot(true);
   };
+
+  const toggleAlarm = () => {
+    const newOnoff = !onoff; // 현재 상태의 반대 값을 계산
+    setonoff(newOnoff); // 상태 업데이트
+
+    // 서버로 새로운 상태를 전송
+    axios.post('http://localhost:3000/onoff', { onoff_now: newOnoff })
+      .then(response => {
+        console.log(response.data);
+      })
+      .catch(error => {
+        console.error(error);
+      });
+  };
+  
+  
+  
 
 
   return (
@@ -127,15 +157,22 @@ const App = () => {
                   <Text style={[fonts.Body1, {color: 'white'}]}>
                     세븐일레븐 한양대학교 에리카점
                   </Text>
+                  <Pressable onPress={toggleAlarm}>
+                
+              </Pressable>
                 </View>
+                
               </View>
               {/* 알람 */}
               <View style={{justifyContent: 'center'}}>
+                
                 <Pressable onPress={AlarmPress}>
                   {!showRedDot && <View style={styles.redDots}></View>}
                   <Alarm />
                 </Pressable>
+                
               </View>
+              
             </View>
             {/* 중간 부분 (매장 상태) */}
             {!showDetail ? (
@@ -157,6 +194,14 @@ const App = () => {
                       <Status style={{marginRight: 12}} />
                       <Text style={fonts.Subtitle1}>매장상태</Text>
                     </View>
+                      <Switch
+                        trackColor={{false: '#767577', true: '#81b0ff'}}
+                        thumbColor={onoff ? '#f5dd4b' : '#f4f3f4'}
+                        ios_backgroundColor="#3e3e3e"
+                        onValueChange={toggleAlarm}
+                        value={onoff}
+                        style = {{marginLeft: -60, transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }]}}
+                      />
                     <Text style={fonts.Subtitle1}>{getDate()}</Text>
                   </View>
                   <View
