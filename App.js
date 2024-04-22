@@ -1,7 +1,14 @@
 import React, {useState, useEffect} from 'react';
-import {FlatList, Pressable, Switch, StyleSheet, Text, View} from 'react-native';
+import {
+  FlatList,
+  Pressable,
+  Switch,
+  StyleSheet,
+  Text,
+  View,
+} from 'react-native';
 import {SafeAreaProvider, SafeAreaView} from 'react-native-safe-area-context';
-import axios from "axios";
+import axios from 'axios';
 import {
   Alarm,
   Alcoholic,
@@ -21,57 +28,52 @@ import AlarmPage from './src/components/AlarmPage';
 import getDate from './src/util/getDate';
 import io from 'socket.io-client';
 
-
 const socket = io('http://localhost:3000');
 
 const App = () => {
   const [showDetail, setShowDetail] = useState(false);
   const [showAlarm, setShowAlarm] = useState(false);
   const [showRedDot, setShowRedDot] = useState(false);
-  const [onoff , setonoff] = useState(false);
+  const [onoff, setonoff] = useState(false);
   const [key, setKey] = useState();
   const [snackAlarmCount, setsnackAlarmCount] = useState(0);
   const [drinkAlarmCount, setdrinkAlarmCount] = useState(0);
-  const [sensorData, setSensorData] = useState([]); 
-
-
-  
+  const [sensorData, setSensorData] = useState([]);
 
   useEffect(() => {
     const fetchDataInterval = setInterval(() => {
       fetchData();
     }, 1000);
-  
 
     return () => {
       clearInterval(fetchDataInterval);
     };
   }, []);
 
-
   const fetchData = async () => {
     try {
       const response = await axios.get('http://localhost:3000/products');
       const responseData = response.data.products;
       socket.on('sensorData', data => {
-        let { light, temp, humi } = data;
-        light = Math.round((light * 100) / 1023);
-        
+        let {light, temp, humi} = data;
+
         // console.log(light); // light 값을 출력하여 확인
         // console.log(temp); // temp 값을 출력하여 확인
         // console.log(humi); // humi 값을 출력하여 확인
-    
+
         // 이전 상태를 직접 수정하고 새로운 배열을 생성하지 않음
         setSensorData([light, temp, humi]);
       });
-  
+
       const snackItems = responseData.filter(item => item.category === '1');
       const drinkItems = responseData.filter(item => item.category === '2');
 
-  
-      setsnackAlarmCount(snackItems.filter(item => item.now_amount === 0).length);
-      setdrinkAlarmCount(drinkItems.filter(item => item.now_amount === 0).length);
-
+      setsnackAlarmCount(
+        snackItems.filter(item => item.now_amount === 0).length,
+      );
+      setdrinkAlarmCount(
+        drinkItems.filter(item => item.now_amount === 0).length,
+      );
     } catch (error) {
       console.error(error);
     }
@@ -83,7 +85,8 @@ const App = () => {
 
   useEffect(() => {
     // 컴포넌트가 처음 렌더링될 때 서버에서 onoff 상태를 가져옴
-    axios.get('http://localhost:3000/onoff')
+    axios
+      .get('http://localhost:3000/onoff')
       .then(response => {
         console.log(response.data); // 서버에서 받은 onoff 값 출력
         setonoff(response.data); // 서버에서 받은 상태로 업데이트
@@ -93,17 +96,16 @@ const App = () => {
       });
   }, []);
 
-
   const data = [
-    {key: 0, title: '과자', icon: 'Snack', count : snackAlarmCount},
-    {key: 1, title: '음료', icon: 'Drink', count : drinkAlarmCount},
-    {key: 2, title: '디저트', icon: 'Dessert', count : 0},
-    {key: 3, title: '라면', icon: 'Ramen', count : 0},
-    {key: 4, title: '생활용품', icon: 'Household_goods', count : 0},
-    {key: 5, title: '유제품', icon: 'Dairy_products', count : 0},
-    {key: 6, title: '의약용품', icon: 'Medicine', count : 0},
-    {key: 7, title: '주류', icon: 'Alcoholic', count : 0},
-    {key: 8, title: '미용', icon: 'Beauty', count : 0},
+    {key: 0, title: '과자', icon: 'Snack', count: snackAlarmCount},
+    {key: 1, title: '음료', icon: 'Drink', count: drinkAlarmCount},
+    {key: 2, title: '디저트', icon: 'Dessert', count: 0},
+    {key: 3, title: '라면', icon: 'Ramen', count: 0},
+    {key: 4, title: '생활용품', icon: 'Household_goods', count: 0},
+    {key: 5, title: '유제품', icon: 'Dairy_products', count: 0},
+    {key: 6, title: '의약용품', icon: 'Medicine', count: 0},
+    {key: 7, title: '주류', icon: 'Alcoholic', count: 0},
+    {key: 8, title: '미용', icon: 'Beauty', count: 0},
   ];
 
   const handlePress = key => {
@@ -121,7 +123,8 @@ const App = () => {
     setonoff(newOnoff); // 상태 업데이트
 
     // 서버로 새로운 상태를 전송
-    axios.post('http://localhost:3000/onoff', { onoff_now: newOnoff })
+    axios
+      .post('http://localhost:3000/onoff', {onoff_now: newOnoff})
       .then(response => {
         console.log(response.data);
       })
@@ -129,10 +132,6 @@ const App = () => {
         console.error(error);
       });
   };
-  
-  
-  
-
 
   return (
     <SafeAreaProvider>
@@ -157,22 +156,16 @@ const App = () => {
                   <Text style={[fonts.Body1, {color: 'white'}]}>
                     세븐일레븐 한양대학교 에리카점
                   </Text>
-                  <Pressable onPress={toggleAlarm}>
-                
-              </Pressable>
+                  <Pressable onPress={toggleAlarm}></Pressable>
                 </View>
-                
               </View>
               {/* 알람 */}
               <View style={{justifyContent: 'center'}}>
-                
                 <Pressable onPress={AlarmPress}>
                   {!showRedDot && <View style={styles.redDots}></View>}
                   <Alarm />
                 </Pressable>
-                
               </View>
-              
             </View>
             {/* 중간 부분 (매장 상태) */}
             {!showDetail ? (
@@ -194,14 +187,17 @@ const App = () => {
                       <Status style={{marginRight: 12}} />
                       <Text style={fonts.Subtitle1}>매장상태</Text>
                     </View>
-                      <Switch
-                        trackColor={{false: '#767577', true: '#81b0ff'}}
-                        thumbColor={onoff ? '#f5dd4b' : '#f4f3f4'}
-                        ios_backgroundColor="#3e3e3e"
-                        onValueChange={toggleAlarm}
-                        value={onoff}
-                        style = {{marginLeft: -60, transform: [{ scaleX: 0.8 }, { scaleY: 0.8 }]}}
-                      />
+                    <Switch
+                      trackColor={{false: '#767577', true: '#81b0ff'}}
+                      thumbColor={onoff ? '#f5dd4b' : '#f4f3f4'}
+                      ios_backgroundColor="#3e3e3e"
+                      onValueChange={toggleAlarm}
+                      value={onoff}
+                      style={{
+                        marginLeft: -60,
+                        transform: [{scaleX: 0.8}, {scaleY: 0.8}],
+                      }}
+                    />
                     <Text style={fonts.Subtitle1}>{getDate()}</Text>
                   </View>
                   <View
@@ -219,7 +215,9 @@ const App = () => {
                           </Text>
                         </View>
                         <View style={styles.status_bottom}>
-                          <Text style={[fonts.H3, {color: 'black'}]}>{sensorData[1]}'C</Text>
+                          <Text style={[fonts.H3, {color: 'black'}]}>
+                            {sensorData[1]}'C
+                          </Text>
                           {/* <Text style={[fonts.H3, {color: 'black'}]}>19'C</Text> */}
                         </View>
                       </View>
@@ -233,7 +231,9 @@ const App = () => {
                           </Text>
                         </View>
                         <View style={styles.status_bottom}>
-                          <Text style={[fonts.H3, {color: 'black'}]}>{sensorData[2]}%</Text>
+                          <Text style={[fonts.H3, {color: 'black'}]}>
+                            {sensorData[2]}%
+                          </Text>
                           {/* <Text style={[fonts.H3, {color: 'black'}]}>50%</Text> */}
                         </View>
                       </View>
@@ -247,7 +247,9 @@ const App = () => {
                           </Text>
                         </View>
                         <View style={styles.status_bottom}>
-                          <Text style={[fonts.H3, {color: 'black'}]}>{sensorData[0]}%</Text>
+                          <Text style={[fonts.H3, {color: 'black'}]}>
+                            {sensorData[0]}%
+                          </Text>
                           {/* <Text style={[fonts.H3, {color: 'black'}]}>50%</Text> */}
                         </View>
                       </View>
