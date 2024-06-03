@@ -33,7 +33,7 @@ const socket = io('http://localhost:3000');
 const App = () => {
   const [showDetail, setShowDetail] = useState(false);
   const [showAlarm, setShowAlarm] = useState(false);
-  const [showRedDot, setShowRedDot] = useState(false);
+  const [showRedDot, setShowRedDot] = useState(true);
   const [onoff, setonoff] = useState(false);
   const [key, setKey] = useState();
   const [snackAlarmCount, setsnackAlarmCount] = useState(0);

@@ -1,4 +1,4 @@
-import {useState, useEffect} from 'react';
+import { useState, useEffect } from 'react';
 import axios from "axios";
 import {
   FlatList,
@@ -9,14 +9,26 @@ import {
   Image,
   Modal,
 } from 'react-native';
-import {fonts} from '../assets/fonts/fonts';
+import { fonts } from '../assets/fonts/fonts';
 
-const snackImage = require('../assets/images/snack_bananakick.jpeg');
+const snackImages = [
+  require('../assets/images/snack_01.jpeg'),
+  require('../assets/images/snack_02.jpeg'),
+  require('../assets/images/snack_03.jpeg'),
+  require('../assets/images/snack_04.jpeg'),
+  require('../assets/images/snack_05.jpeg'),
+  require('../assets/images/snack_06.jpeg')
+];
 
-const DetailPage = ({setShowDetail, index }) => {
+const drinkImages = [
+  require('../assets/images/drink_01.jpeg'),
+  require('../assets/images/drink_02.jpeg'),
+  require('../assets/images/drink_03.jpeg')
+];
+
+const DetailPage = ({ setShowDetail, index }) => {
   const [items, setItems] = useState([]);
   const [modalVisible, setModalVisible] = useState(false);
-
 
   const handleGoBack = () => {
     setShowDetail(false);
@@ -50,7 +62,7 @@ const DetailPage = ({setShowDetail, index }) => {
     } catch (error) {
       console.error(error);
     }
-  }; 
+  };
 
   return (
     <View style={styles.background}>
@@ -61,7 +73,7 @@ const DetailPage = ({setShowDetail, index }) => {
           paddingHorizontal: 40,
           paddingVertical: 20,
         }}>
-        <View style={{flexDirection: 'row', algnItems: 'center'}}>
+        <View style={{ flexDirection: 'row', algnItems: 'center' }}>
           <Text style={fonts.Subtitle1}>과자</Text>
         </View>
         <Text style={fonts.Subtitle1}>이름/수량</Text>
@@ -76,8 +88,8 @@ const DetailPage = ({setShowDetail, index }) => {
         <FlatList
           data={items}
           numColumns={1}
-          style={{width: '100%'}}
-          renderItem={({item}) => (
+          style={{ width: '100%' }}
+          renderItem={({ item, index }) => (
             <View
               style={{
                 flexDirection: 'row',
@@ -88,18 +100,21 @@ const DetailPage = ({setShowDetail, index }) => {
                 borderBottomColor: 'white',
                 paddingBottom: 12,
               }}>
-              <View style={{flexDirection: 'row', alignItems: 'center'}}>
-                <Image source={snackImage} style={styles.image} />
-                <View style={{marginLeft: 40}}>
-                  <Text style={[fonts.Subtitle2, {textAlign: 'center', width: 90}]}>
+              <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+              <Image 
+                  source={item.category === "1" ? snackImages[index % snackImages.length] : drinkImages[index % drinkImages.length]} 
+                  style={styles.image} 
+                />
+                <View style={{ marginLeft: 40 }}>
+                  <Text style={[fonts.Subtitle2, { textAlign: 'center', width: 90 }]}>
                     {item.name}
                   </Text>
                   {item.now_amount > 0 ? (
                     <Text
                       style={[
                         fonts.Subtitle2,
-                        {color: 'black'},
-                        {textAlign: 'center'},
+                        { color: 'black' },
+                        { textAlign: 'center' },
                       ]}>
                       {item.now_amount}/{item.amount}
                     </Text>
@@ -107,8 +122,8 @@ const DetailPage = ({setShowDetail, index }) => {
                     <Text
                       style={[
                         fonts.Subtitle2,
-                        {color: 'red'},
-                        {textAlign: 'center'},
+                        { color: 'red' },
+                        { textAlign: 'center' },
                       ]}>
                       {item.now_amount}/{item.amount}
                     </Text>
@@ -116,11 +131,11 @@ const DetailPage = ({setShowDetail, index }) => {
                 </View>
                 <Pressable
                   onPress={handleOrder}
-                  style={[styles.orderButton, {marginLeft: 40}]}>
+                  style={[styles.orderButton, { marginLeft: 40 }]}>
                   <Text
                     style={[
                       fonts.Subtitle2,
-                      {color: 'white', textAlign: 'center'},
+                      { color: 'white', textAlign: 'center' },
                     ]}>
                     주문하기
                   </Text>
@@ -155,7 +170,7 @@ const DetailPage = ({setShowDetail, index }) => {
         </Modal>
         <Pressable onPress={handleGoBack} style={styles.goBackButton}>
           <Text
-            style={[fonts.Subtitle2, {color: 'white', textAlign: 'center'}]}>
+            style={[fonts.Subtitle2, { color: 'white', textAlign: 'center' }]}>
             돌아가기
           </Text>
         </Pressable>
