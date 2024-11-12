@@ -1,54 +1,46 @@
-import React from 'react';
-import {useState, useEffect} from 'react';
-import axios from "axios";
-import {FlatList, View, Text, StyleSheet, Pressable} from 'react-native';
-import {Arrow} from '../assets/icons/svg';
-import {fonts} from '../assets/fonts/fonts';
+import React, { useState, useEffect } from 'react';
+import axios from 'axios';
+import { FlatList, View, Text, StyleSheet, Pressable } from 'react-native';
+import { Arrow } from '../assets/icons/svg';
+import { fonts } from '../assets/fonts/fonts';
 
-
-
-const AlarmPage = ({setShowAlarm}) => {
+const AlarmPage = ({ setShowAlarm }) => {
   const [items, setItems] = useState([]);
 
-  const handleGoBack = () => {
-    setShowAlarm(false); // 알람 페이지를 닫음
-  };
-
   useEffect(() => {
-    requestAlarmGet();
+    fetchAlarms();
   }, []);
 
-  const requestAlarmGet = async () => {
+  const fetchAlarms = async () => {
     try {
       const response = await axios.get('http://localhost:3000/alarms');
-      const data = response.data;
-
- 
-      setItems(data.alarms);
-      console.log(data.alarms);
-      //console.log(items);
+      setItems(response.data.alarms);
     } catch (error) {
-      console.error(error);
+      console.error("Failed to fetch alarms:", error);
     }
   };
 
+  const handleGoBack = () => {
+    setShowAlarm(false);
+  };
+
+  const renderAlarmItem = ({ item }) => (
+    <View style={styles.alarmItem}>
+      <Text style={styles.titleText}>{item.title}</Text>
+      <Text style={styles.bodyText}>{item.body}</Text>
+      <Text style={styles.dateText}>{item.date}</Text>
+    </View>
+  );
+
   return (
-    <View style={{backgroundColor: '#0247F9', flex: 1}} edges={['top']}>
-      <View style={styles.intro_container}>
+    <View style={styles.container}>
+      <View style={styles.introContainer}>
         <View style={styles.header}>
-          <Pressable
-            onPress={handleGoBack}
-            style={{marginLeft: 20, marginTop: 10}}>
+          <Pressable onPress={handleGoBack} style={styles.goBackButton}>
             <Arrow />
           </Pressable>
-          <View
-            style={{
-              flex: 1,
-              justifyContent: 'center',
-              alignItems: 'center',
-              marginRight: 35,
-            }}>
-            <Text style={[fonts.H3, {color: 'white'}]}>알림</Text>
+          <View style={styles.titleContainer}>
+            <Text style={styles.headerTitle}>알림</Text>
           </View>
         </View>
       </View>
@@ -56,30 +48,10 @@ const AlarmPage = ({setShowAlarm}) => {
         <FlatList
           data={items}
           numColumns={1}
-          style={{
-            width: '100%',
-            marginBottom: 20,
-            marginTop: 30,
-          }}
-          renderItem={({item}) => {
-            return (
-              <View style={styles.alarmItem}>
-                <Text
-                  style={[fonts.Subtitle2, {marginTop: 10, marginLeft: 22}]}>
-                  {item.title}
-                </Text>
-                <Text style={[fonts.body2, {marginTop: 10, marginLeft: 22}]}>
-                  {item.body}
-                </Text>
-                <Text style={styles.DateText}>{item.date}</Text>
-              </View>
-            );
-          }}
+          style={styles.flatList}
+          renderItem={renderAlarmItem}
           keyExtractor={(item) => item._id}
-          contentContainerStyle={{
-            justifyContent: 'space-between',
-            alignItems: 'center',
-          }}
+          contentContainerStyle={styles.contentContainer}
         />
       </View>
     </View>
@@ -87,7 +59,11 @@ const AlarmPage = ({setShowAlarm}) => {
 };
 
 const styles = StyleSheet.create({
-  intro_container: {
+  container: {
+    backgroundColor: '#0247F9',
+    flex: 1,
+  },
+  introContainer: {
     backgroundColor: '#0247F9',
     width: '100%',
     height: '11%',
@@ -95,12 +71,36 @@ const styles = StyleSheet.create({
   header: {
     marginTop: 25,
     flexDirection: 'row',
+    alignItems: 'center',
+  },
+  goBackButton: {
+    marginLeft: 20,
+    marginTop: 10,
+  },
+  titleContainer: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginRight: 35,
+  },
+  headerTitle: {
+    ...fonts.H3,
+    color: 'white',
   },
   background: {
     backgroundColor: '#ECECEC',
     borderRadius: 32,
     flex: 1,
     justifyContent: 'center',
+    alignItems: 'center',
+  },
+  flatList: {
+    width: '100%',
+    marginBottom: 20,
+    marginTop: 30,
+  },
+  contentContainer: {
+    justifyContent: 'space-between',
     alignItems: 'center',
   },
   alarmItem: {
@@ -117,16 +117,23 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
     shadowRadius: 2,
   },
-
-  DateText: [
-    fonts.Caption1,
-    {
-      position: 'absolute',
-      right: 13,
-      bottom: 8,
-      color: '#444444',
-    },
-  ],
+  titleText: {
+    ...fonts.Subtitle2,
+    marginTop: 10,
+    marginLeft: 22,
+  },
+  bodyText: {
+    ...fonts.body2,
+    marginTop: 10,
+    marginLeft: 22,
+  },
+  dateText: {
+    ...fonts.Caption1,
+    position: 'absolute',
+    right: 13,
+    bottom: 8,
+    color: '#444444',
+  },
 });
 
 export default AlarmPage;
